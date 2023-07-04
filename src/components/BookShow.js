@@ -9,24 +9,38 @@ function BookShow({ book, onDelete, onEdit }) {
   };
 
   const handleEditClick = () => {
-    setShowEdit((showEdit) => !showEdit);
+    setShowEdit(!showEdit);
   };
+
+  const handleSubmit = (id, newTitle) => {
+    setShowEdit(false);
+    onEdit(id, newTitle);
+  }
 
   let content = <h3>{book.title}</h3>
   if(showEdit) {
-    content = <BookEdit onEdit={onEdit} book={book}/>;
+    content = <BookEdit onSubmit={handleSubmit} book={book}/>;
   }
 
   return (
-    <div className="boot-show">
-      <div>{content}</div>
-      <div className="actions">
-        <button className="edit" onClick={handleEditClick}>
-          Edit 
-        </button>
-        <button className="delete" onClick={handleDeleteClick}>
-          Delete
-        </button>
+    <div className="column is-one-half is-3-tablet">
+      <div className="card">
+        <div className="card-image">
+          <figure className="image is-4by3">
+            <img alt="books" src={`https://picsum.photos/seed/${book.id}/300/200`} />
+          </figure>
+        </div>
+        <div className="card-content">
+          {content}
+          <div className="buttons are-small mt-5">
+            <button className="button is-primary" onClick={handleEditClick}>
+              Edit 
+            </button>
+            <button className="button is-danger" onClick={handleDeleteClick}>
+              Delete
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
