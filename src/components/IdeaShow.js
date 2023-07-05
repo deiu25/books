@@ -1,25 +1,26 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { IdeasContext } from "../context/ideas";
 import IdeaEdit from "./IdeaEdit";
 
-function IdeaShow({ idea, onDelete, onEdit }) {
+function IdeaShow({ idea }) {
   const [showEdit, setShowEdit] = useState(false);
+  const { deleteIdeaById } = useContext(IdeasContext);
 
   const handleDeleteClick = () => {
-    onDelete(idea.id);
+    deleteIdeaById(idea.id);
   };
 
   const handleEditClick = () => {
     setShowEdit(!showEdit);
   };
 
-  const handleSubmit = (id, newTitle) => {
+  const handleSubmit = () => {
     setShowEdit(false);
-    onEdit(id, newTitle);
-  }
+  };
 
-  let content = <h3>{idea.title}</h3>
-  if(showEdit) {
-    content = <IdeaEdit onSubmit={handleSubmit} idea={idea}/>;
+  let content = <h3>{idea.title}</h3>;
+  if (showEdit) {
+    content = <IdeaEdit onSubmit={handleSubmit} idea={idea} />;
   }
 
   return (
@@ -27,14 +28,17 @@ function IdeaShow({ idea, onDelete, onEdit }) {
       <div className="card">
         <div className="card-image">
           <figure className="image is-4by3">
-            <img alt="ideas" src={`https://picsum.photos/seed/${idea.id}/300/200`} />
+            <img
+              alt="ideas"
+              src={`https://picsum.photos/seed/${idea.id}/300/200`}
+            />
           </figure>
         </div>
         <div className="card-content">
           {content}
           <div className="buttons are-small mt-5">
             <button className="button is-primary" onClick={handleEditClick}>
-              Edit 
+              Edit
             </button>
             <button className="button is-danger" onClick={handleDeleteClick}>
               Delete
