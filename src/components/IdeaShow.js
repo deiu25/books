@@ -1,11 +1,11 @@
 import { useState } from "react";
-import BookEdit from "./BookEdit";
+import IdeaEdit from "./IdeaEdit";
 
-function BookShow({ book, onDelete, onEdit }) {
+function IdeaShow({ idea, onDelete, onEdit }) {
   const [showEdit, setShowEdit] = useState(false);
 
   const handleDeleteClick = () => {
-    onDelete(book.id);
+    onDelete(idea.id);
   };
 
   const handleEditClick = () => {
@@ -17,9 +17,9 @@ function BookShow({ book, onDelete, onEdit }) {
     onEdit(id, newTitle);
   }
 
-  let content = <h3>{book.title}</h3>
+  let content = <h3>{idea.title}</h3>
   if(showEdit) {
-    content = <BookEdit onSubmit={handleSubmit} book={book}/>;
+    content = <IdeaEdit onSubmit={handleSubmit} idea={idea}/>;
   }
 
   return (
@@ -27,7 +27,7 @@ function BookShow({ book, onDelete, onEdit }) {
       <div className="card">
         <div className="card-image">
           <figure className="image is-4by3">
-            <img alt="books" src={`https://picsum.photos/seed/${book.id}/300/200`} />
+            <img alt="ideas" src={`https://picsum.photos/seed/${idea.id}/300/200`} />
           </figure>
         </div>
         <div className="card-content">
@@ -46,4 +46,4 @@ function BookShow({ book, onDelete, onEdit }) {
   );
 }
 
-export default BookShow;
+export default IdeaShow;

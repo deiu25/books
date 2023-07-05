@@ -1,3 +1,7 @@
+.theme-button {
+  width: 100%;
+}
+
 .app.light {
     background-color: white;
     color: black;
@@ -6,5 +10,10 @@
   .app.dark {
     background-color: black;
     color: white;
+  }
+  
+  .custom-hr {
+    height: 2px;
+    box-shadow: 0 0 5px #888;
   }
   

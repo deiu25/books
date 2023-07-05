@@ -1,10 +1,9 @@
 import 'bulma/css/bulma.min.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 
-import { useState } from 'react';
-import React, { useContext } from 'react';
-import BookCreate from "./components/BookCreate";
-import BookList from "./components/BookList";
+import { useState, useEffect, useContext } from 'react';
+import IdeaCreate from "./components/IdeaCreate";
+import IdeaList from "./components/IdeaList";
 import { ThemeContext } from './components/ThemeContext';
 
 function App() {
@@ -12,34 +11,51 @@ function App() {
 
   const appClass = theme === 'light' ? 'app light' : 'app dark';
 
-  const [books, setBooks] = useState([])
+  const [ideas, setIdeas] = useState([])
 
-  const editBookById = (id, newtitle) => {
-    const updatedBooks = books.map((book) => {
-      if(book.id === id) {
-        return { ...book, title: newtitle };
+  useEffect(() => {
+    const allIdeas = Array.from({length: 100}, (_, i) => ({ id: i+1, title: `Idea ${i+1}` }));
+  
+    const randomIdeas = [];
+  
+    for (let i = 0; i < 4; i++) {
+      const randomIdea = allIdeas[Math.floor(Math.random() * allIdeas.length)];
+      if (!randomIdeas.find(idea => idea.id === randomIdea.id)) {
+        randomIdeas.push(randomIdea);
       } else {
-        return book;
+        i--;
+      }
+    }
+  
+    setIdeas(randomIdeas);
+  }, []);
+
+  const editIdeaById = (id, newtitle) => {
+    const updatedIdeas = ideas.map((idea) => {
+      if(idea.id === id) {
+        return { ...idea, title: newtitle };
+      } else {
+        return idea;
       }
     });
-    setBooks(updatedBooks);
+    setIdeas(updatedIdeas);
   };
 
-  const deleteBookById = (id) => {
-    const updatedBooks = books.filter((book) => {
-      return book.id !== id;
+  const deleteIdeaById = (id) => {
+    const updatedIdeas = ideas.filter((idea) => {
+      return idea.id !== id;
     });
-    setBooks(updatedBooks);
+    setIdeas(updatedIdeas);
   };
 
-  const createBook = (title) => {
-    const updatedBooks = [...books, { id: Math.round(Math.random() * 9999 ), title } ];
-       setBooks(updatedBooks);
+  const createIdea = (title) => {
+    const updatedIdeas = [...ideas, { id: Math.round(Math.random() * 9999 ), title } ];
+       setIdeas(updatedIdeas);
   };
 
   return (
     <div className={appClass}>
-      <button className={`button is-rounded ${theme === 'light' ? 'is-info' : 'is-dark'}`} onClick={toggleTheme}>
+      <button className={`theme-button button ${theme === 'light' ? 'is-info' : 'is-dark'}`} onClick={toggleTheme}>
         {theme === 'light' ? (
           <span className="icon">
             <i className="fas fa-moon"></i>
@@ -51,9 +67,10 @@ function App() {
         )}
       </button>
       <div className="container mt-5">
-        <h1 className="title has-text-centered">Books</h1>
-        <BookCreate onCreate={createBook} />
-        <BookList onEdit={editBookById} books={books} onDelete={deleteBookById}/>
+        <h1 className="title has-text-centered">Ideas</h1>
+        <hr className="custom-hr"/>
+        <IdeaCreate onCreate={createIdea} />
+        <IdeaList onEdit={editIdeaById} ideas={ideas} onDelete={deleteIdeaById}/>
       </div>
     </div>
   );

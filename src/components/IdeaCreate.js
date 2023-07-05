@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function BookCreate({ onCreate }) {
+function IdeaCreate({ onCreate }) {
   const [title, setTitle] = useState("");
 
   const handleChange = (event) => {
@@ -14,8 +14,9 @@ function BookCreate({ onCreate }) {
   };
 
   return (
-    <div className="box">
-      <h3 className="title is-4">Create a Book</h3>
+    <div className="box has-text-centered">
+      <h3 className="title is-4">Create an idea</h3>
+      <hr />
       <form onSubmit={handleSubmit}>
         <div className="field">
           <label className="label">Title</label>
@@ -29,4 +30,4 @@ function BookCreate({ onCreate }) {
   );
 }
 
-export default BookCreate;
+export default IdeaCreate;
