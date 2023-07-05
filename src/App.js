@@ -14,38 +14,30 @@ function App() {
 
   const [ideas, setIdeas] = useState([]);
 
+  const fetchIdeas = async () => {
+    const response = await axios.get("http://localhost:3001/books");
+
+    setIdeas(response.data);
+  };
+
   useEffect(() => {
-    const allIdeas = Array.from({ length: 100 }, (_, i) => ({
-      id: i + 1,
-      title: `Idea ${i + 1}`,
-    }));
-
-    const randomIdeas = [];
-
-    for (let i = 0; i < 4; i++) {
-      const randomIdea = allIdeas[Math.floor(Math.random() * allIdeas.length)];
-      if (!randomIdeas.find((idea) => idea.id === randomIdea.id)) {
-        randomIdeas.push(randomIdea);
-      } else {
-        i--;
-      }
-    }
-
-    setIdeas(randomIdeas);
+    fetchIdeas();
   }, []);
 
-  const editIdeaById = (id, newtitle) => {
+  const editIdeaById = async (id, newtitle) => {
+    const response = await axios.put(`http://localhost:3001/books/${id}`, { title: newtitle });
     const updatedIdeas = ideas.map((idea) => {
       if (idea.id === id) {
-        return { ...idea, title: newtitle };
-      } else {
+        return { ...idea, ...response.data };
+      } 
         return idea;
-      }
+
     });
     setIdeas(updatedIdeas);
   };
 
-  const deleteIdeaById = (id) => {
+  const deleteIdeaById = async (id) => {
+    await axios.delete(`http://localhost:3001/books/${id}`);
     const updatedIdeas = ideas.filter((idea) => {
       return idea.id !== id;
     });
@@ -54,9 +46,8 @@ function App() {
 
   const createIdea = async (title) => {
     const response = await axios.post("http://localhost:3001/books", { title });
-
-    const updatedIdeas = [...ideas, response.data ];
-       setIdeas(updatedIdeas);
+    const updatedIdeas = [...ideas, response.data];
+    setIdeas(updatedIdeas);
   };
 
   return (
