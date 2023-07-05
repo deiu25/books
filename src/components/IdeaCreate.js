@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState , useContext } from "react";
+import { IdeasContext } from "../context/ideas";
 
-function IdeaCreate({ onCreate }) {
+function IdeaCreate() {
   const [title, setTitle] = useState("");
+  const { createIdea } = useContext(IdeasContext);
 
   const handleChange = (event) => {
     setTitle(event.target.value);
@@ -9,7 +11,7 @@ function IdeaCreate({ onCreate }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onCreate(title);
+    createIdea(title);
     setTitle("");
   };
 
