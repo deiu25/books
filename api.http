@@ -1,0 +1,30 @@
+#GET all books
+GET http://localhost:3001/books HTTP/1.1
+Content-Type: application/json
+
+###
+#Create an idea
+POST http://localhost:3001/books HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Have a nice day",
+    "body": "Hello there",
+    "impact": 10,
+}
+
+###
+#Update an idea
+PUT http://localhost:3001/books/1 HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Have a nice day",
+    "body": "Hello there again",
+    "impact": 11,
+}
+
+###
+#Delete an idea
+DELETE http://localhost:3001/books/1 HTTP/1.1
+Content-Type: application/json
