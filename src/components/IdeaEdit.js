@@ -1,9 +1,9 @@
-import { useState, useContext } from "react";
-import { IdeasContext } from "../context/ideas";
+import { useState } from "react";
+import useIdeasContext from "../hooks/use-ideas-context";
 
 function IdeaEdit({ idea, onSubmit }) {
   const [title, setTitle] = useState(idea.title);
-  const { editIdeaById } = useContext(IdeasContext);
+  const { editIdeaById } = useIdeasContext();
 
   const handleChange = (event) => {
     setTitle(event.target.value);

@@ -1,10 +1,10 @@
-import { useState, useContext } from "react";
-import { IdeasContext } from "../context/ideas";
+import { useState } from "react";
+import useIdeasContext from "../hooks/use-ideas-context";
 import IdeaEdit from "./IdeaEdit";
 
 function IdeaShow({ idea }) {
   const [showEdit, setShowEdit] = useState(false);
-  const { deleteIdeaById } = useContext(IdeasContext);
+  const { deleteIdeaById } = useIdeasContext();
 
   const handleDeleteClick = () => {
     deleteIdeaById(idea.id);

@@ -1,9 +1,9 @@
-import React, { useState , useContext } from "react";
-import { IdeasContext } from "../context/ideas";
+import { useState } from "react";
+import useIdeasContext from "../hooks/use-ideas-context";
 
 function IdeaCreate() {
   const [title, setTitle] = useState("");
-  const { createIdea } = useContext(IdeasContext);
+  const { createIdea } = useIdeasContext();
 
   const handleChange = (event) => {
     setTitle(event.target.value);
