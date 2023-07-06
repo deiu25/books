@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useCallback } from "react";
 import axios from "axios";
 
 const IdeasContext = createContext();
@@ -6,10 +6,11 @@ const IdeasContext = createContext();
 function Provider({ children }) {
   const [ideas, setIdeas] = useState([]);
 
-  const fetchIdeas = async () => {
+  const fetchIdeas = useCallback (async () => {
     const response = await axios.get("http://localhost:3001/books");
     setIdeas(response.data);
-  };
+  }, []);
+
 
   const editIdeaById = async (id, newtitle) => {
     const response = await axios.put(`http://localhost:3001/books/${id}`, {

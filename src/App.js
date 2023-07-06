@@ -16,7 +16,7 @@ function App() {
 
   useEffect(() => {
     fetchIdeas();
-  }, []);
+  }, [fetchIdeas]);
 
 
   return (
